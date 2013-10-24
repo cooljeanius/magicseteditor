@@ -1,6 +1,6 @@
-# ============================================================================
-#  http://www.gnu.org/software/autoconf-archive/ax_cxx_have_ext_hash_set.html
-# ============================================================================
+#==========================================================================
+# http://www.gnu.org/software/autoconf-archive/ax_cxx_have_ext_hash_set.html
+#==========================================================================
 #
 # SYNOPSIS
 #
@@ -11,14 +11,14 @@
 #   Check if the compiler has ext/hash_set Eg:
 #
 #     #if defined(HAVE_EXT_HASH_SET)
-#     #include <ext/hash_set>
+#     # include <ext/hash_set>
 #     #else
-#     #if defined(HAVE_STL)
-#     #include <hash_set>
-#     #else
-#     # Can't find hash_set header !
-#     #endif
-#     #endif
+#     # if defined(HAVE_STL)
+#     #  include <hash_set>
+#     # else
+#     #   Cannot find hash_set header !
+#     # endif /* HAVE_STL */
+#     #endif /* HAVE_EXT_HASH_SET */
 #
 # LICENSE
 #
@@ -31,8 +31,8 @@
 #
 #   This program is distributed in the hope that it will be useful, but
 #   WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-#   Public License for more details.
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GPL
+#   for more details.
 #
 #   You should have received a copy of the GNU General Public License along
 #   with this program. If not, see <http://www.gnu.org/licenses/>.
@@ -52,21 +52,24 @@
 
 #serial 5
 
-AU_ALIAS([AC_CXX_HAVE_EXT_HASH_SET], [AX_CXX_HAVE_EXT_HASH_SET])
+AU_ALIAS([AC_CXX_HAVE_EXT_HASH_SET],[AX_CXX_HAVE_EXT_HASH_SET])
 AC_DEFUN([AX_CXX_HAVE_EXT_HASH_SET],
-[AC_CACHE_CHECK(whether the compiler has ext/hash_set,
-ax_cv_cxx_have_ext_hash_set,
+[AC_CACHE_CHECK([whether the compiler has ext/hash_set],
+[ax_cv_cxx_have_ext_hash_set],
 [AC_REQUIRE([AX_CXX_NAMESPACES])
-  AC_LANG_SAVE
-  AC_LANG_CPLUSPLUS
-  AC_TRY_COMPILE([#include <ext/hash_set>
+  AC_LANG_PUSH([C++])
+  AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+#include <ext/hash_set>
 #ifdef HAVE_NAMESPACES
 using namespace std;
-#endif],[hash_set<int> t; return 0;],
-  ax_cv_cxx_have_ext_hash_set=yes, ax_cv_cxx_have_ext_hash_set=no)
-  AC_LANG_RESTORE
+#endif
+  ]],[[
+hash_set<int> t; return 0;
+  ]])],
+  [ax_cv_cxx_have_ext_hash_set=yes],[ax_cv_cxx_have_ext_hash_set=no])
+  AC_LANG_POP
 ])
 if test "$ax_cv_cxx_have_ext_hash_set" = yes; then
-   AC_DEFINE(HAVE_EXT_HASH_SET,,[define if the compiler has ext/hash_set])
+   AC_DEFINE([HAVE_EXT_HASH_SET],[1],[Define to 1 if the compiler has ext/hash_set])
 fi
 ])

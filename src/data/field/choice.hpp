@@ -18,6 +18,17 @@
 #include <script/image.hpp>
 #include <wx/image.h>
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+# ifdef HAVE_WX_IMAGLIST_H
+#  include <wx/imaglist.h> // for wxImageList
+# else
+#  warning choice.hpp expects <wx/imaglist.h> to be included.
+# endif /* HAVE_WX_IMAGLIST_H */
+#else
+# warning Need to use this header with autoheader to see if we can include <wx/imaglist.h>.
+#endif /* HAVE_CONFIG_H */
+
 // ----------------------------------------------------------------------------- : ChoiceField
 
 DECLARE_POINTER_TYPE(ChoiceField);
@@ -28,14 +39,14 @@ class ChoiceField : public Field {
   public:
 	ChoiceField();
 	DECLARE_FIELD_TYPE();
-	
+
 	class Choice;
 	typedef intrusive_ptr<Choice> ChoiceP;
-	
+
 	ChoiceP choices;				///< A choice group of possible choices
 	map<String,Color> choice_colors;			///< Colors for the various choices (when color_cardlist)
 	map<String,Color> choice_colors_cardlist;	///< Colors for the various choices, for in the card list
-	
+
 	virtual void after_reading(Version ver);
 };
 
@@ -50,7 +61,7 @@ class ChoiceField::Choice : public IntrusivePtrBase<ChoiceField::Choice> {
   public:
 	Choice();
 	Choice(const String& name, const String& caption);
-	
+
 	String           name;			///< Name/value of the item
 	String           caption;		///< Caption that is shown in menus etc.
 	String           default_name;	///< A default item, if this is a group and default_name.empty() there is no default
@@ -63,13 +74,13 @@ class ChoiceField::Choice : public IntrusivePtrBase<ChoiceField::Choice> {
 	 *  The top level group has first_id 0.
 	 */
 	int             first_id;
-	
+
 	/// Is this a group?
 	bool isGroup() const;
 	/// Can this Choice itself be chosen?
 	/** For a single choice this is always true, for a group only if it has a default choice */
 	bool hasDefault() const;
-	
+
 	/// Initialize the first_id of children
 	/** @pre first_id is set
 	 *  Returns lastId()
@@ -80,7 +91,7 @@ class ChoiceField::Choice : public IntrusivePtrBase<ChoiceField::Choice> {
 	int choiceCount() const;
 	/// item-id just beyond the end of this group
 	int lastId() const;
-	
+
 	/// item-id of a choice, given the internal name
 	/** If the id is not in this group, returns -1 */
 	int choiceId(const String& name) const;
@@ -90,11 +101,11 @@ class ChoiceField::Choice : public IntrusivePtrBase<ChoiceField::Choice> {
 	 */
 	String choiceName(int id) const;
 	/// Formated name of a choice.
-	/** Intended for use in menu structures, so it doesn't include the group name for children.
+	/** Intended for use in menu structures, so it does not include the group name for children.
 	 *  Returns "" if id is not in this group.
 	 */
 	String choiceNameNice(int id) const;
-	
+
 	DECLARE_REFLECTION();
 };
 
@@ -110,7 +121,7 @@ enum ChoicePopupStyle
 enum ChoiceRenderStyle
 {	RENDER_TEXT            = 0x01	// render the name as text
 ,	RENDER_IMAGE           = 0x10	// render an image
-,	RENDER_HIDDEN          = 0x20	// don't render anything, only have a menu
+,	RENDER_HIDDEN          = 0x20	// do not render anything, only have a menu
 ,	RENDER_CHECKLIST       = 0x100	// render as a checklist, intended for multiple choice
 ,	RENDER_LIST            = 0x200	// render as a list of images/text, intended for multiple choice
 ,	RENDER_BOTH            = RENDER_TEXT      | RENDER_IMAGE
@@ -135,7 +146,7 @@ class ChoiceStyle : public Style {
 	ChoiceStyle(const ChoiceFieldP& field);
 	DECLARE_STYLE_TYPE(Choice);
 	~ChoiceStyle();
-	
+
 	ChoicePopupStyle            popup_style;        ///< Style of popups/menus
 	ChoiceRenderStyle           render_style;       ///< Style of rendering
 	Font                        font;               ///< Font for drawing text (when RENDER_TEXT)
@@ -148,10 +159,10 @@ class ChoiceStyle : public Style {
 	vector<ThumbnailStatus>     thumbnails_status;  ///< Which thumbnails are up to date?
 	// information from image rendering
 	double content_width, content_height;		///< Size of the rendered image/text
-	
+
 	/// Initialize image from choice_images
 	void initImage();
-	
+
 	virtual int  update(Context&);
 	virtual void initDependencies(Context&, const Dependency&) const;
 	virtual void checkContentDependencies(Context&, const Dependency&) const;
@@ -164,4 +175,4 @@ typedef Value ChoiceValue;
 typedef ValueP ChoiceValueP;
 
 // ----------------------------------------------------------------------------- : EOF
-#endif
+#endif /* !HEADER_DATA_FIELD_CHOICE */

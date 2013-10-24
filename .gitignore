@@ -9,6 +9,7 @@
 *.o
 *~
 Makefile
+confdefs.h
 src/config.h
 config.h
 stamp-h*
@@ -17,3 +18,15 @@ src/stamp-h*
 */*deps/*.*o
 */*/*deps/*.*o
 */*/*/*deps/*.*o
+*.status
+libtool
+po/Makefile
+po/Makefile.in
+po/Makevars
+po/POTFILES
+_stdint.h
+*.dirstamp
+tmpwrk*/*
+*(Autosaved)*
+*.userprefs
+*.layout

@@ -1,6 +1,6 @@
-# ===========================================================================
+#==========================================================================
 #    http://www.gnu.org/software/autoconf-archive/ax_compiler_vendor.html
-# ===========================================================================
+#==========================================================================
 #
 # SYNOPSIS
 #
@@ -25,8 +25,8 @@
 #
 #   This program is distributed in the hope that it will be useful, but
 #   WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-#   Public License for more details.
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GPL for
+#   more details.
 #
 #   You should have received a copy of the GNU General Public License along
 #   with this program. If not, see <http://www.gnu.org/licenses/>.
@@ -48,7 +48,7 @@
 
 AC_DEFUN([AX_COMPILER_VENDOR],
 [AC_CACHE_CHECK([for _AC_LANG compiler vendor], ax_cv_[]_AC_LANG_ABBREV[]_compiler_vendor,
-  [# note: don't check for gcc first since some other compilers define __GNUC__
+  [# note: do NOT check for gcc first since some other compilers define __GNUC__
   vendors="intel:     __ICC,__ECC,__INTEL_COMPILER
            ibm:       __xlc__,__xlC__,__IBMC__,__IBMCPP__
            pathscale: __PATHCC__,__PATHSCALE__
@@ -73,11 +73,11 @@ AC_DEFUN([AX_COMPILER_VENDOR],
       *:) vendor=$ventest; continue ;;
       *)  vencpp="defined("`echo $ventest | sed 's/,/) || defined(/g'`")" ;;
     esac
-    AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]],[[
       #if !($vencpp)
         thisisanerror;
       #endif
-    ])], [break])
+    ]])],[break])
   done
   ax_cv_[]_AC_LANG_ABBREV[]_compiler_vendor=`echo $vendor | cut -d: -f1`
  ])

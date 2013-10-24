@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="win32-cli-wrapper" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="../build/cli-Debug Win32/mse" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../build/cli-Debug Win32" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+				</Compiler>
+				<ExtraCommands>
+					<Add after="copy ..\build\cli-Debug Win32\mse.com ..\build\Debug Win32\mse.com&#x0A;copy ..\build\cli-Debug Win32\mse.com ..\build\Debug Win32 Unicode\mse.com" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="../build/cli-Release Win32/mse" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../build/cli-Release Win32" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add option="-W" />
+				</Compiler>
+				<ExtraCommands>
+					<Add after="copy ..\build\cli-Release Win32\mse.com ..\build\Release Win32\mse.com&#x0A;copy ..\build\cli-Release Win32\mse.com ..\build\Release Win32 Unicode\mse.com&#x0A;copy ..\build\cli-Release Win32\mse.com ..\build\Release Unicode fast build\mse.com" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Unit filename="cli/win32_cli_wrapper.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
