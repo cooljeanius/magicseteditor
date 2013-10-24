@@ -198,7 +198,7 @@ card style:
 		height:
 			script: if is_nmonster() then 92 else 62
 		font:
-			name: { if styling.bold_effect_text=="yes" then "Matrix-Bold" else "MatrixBook" }
+			name: { if styling.bold_effect_text=="yes" then "Action Force" else "MatrixBook" }
 			size: { if styling.bold_effect_text=="yes" then "9" else "8" }
 			scale down to: 4
 			color: rgb(0,0,0)
