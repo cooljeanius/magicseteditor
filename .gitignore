@@ -10,6 +10,7 @@
 *~
 Makefile
 confdefs.h
+conftest*
 src/config.h
 config.h
 stamp-h*
