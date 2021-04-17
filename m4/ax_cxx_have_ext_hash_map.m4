@@ -1,6 +1,6 @@
-#==========================================================================
-# http://www.gnu.org/software/autoconf-archive/ax_cxx_have_ext_hash_map.html
-#==========================================================================
+# =============================================================================
+#  https://www.gnu.org/software/autoconf-archive/ax_cxx_have_ext_hash_map.html
+# =============================================================================
 #
 # SYNOPSIS
 #
@@ -11,17 +11,17 @@
 #   Check if the compiler has ext/hash_map Eg:
 #
 #     #if defined(HAVE_EXT_HASH_MAP)
-#     # include <ext/hash_map>
+#     #include <ext/hash_map>
 #     #else
-#     # if defined(HAVE_STL)
-#     #  include <hash_map>
-#     # else
-#     #  Cannot find hash_map header !
-#     # endif /* HAVE_STL */
-#     #endif /* HAVE_EXT_HASH_MAP */
+#     #if defined(HAVE_STL)
+#     #include <hash_map>
+#     #else
+#     # Can't find hash_map header !
+#     #endif
+#     #endif
 #
 #   This file is Alain BARBET's AC_CXX_HAVE_EXT_HASH_SET 1.1 with
-#   s/set/map/g :-)
+#   s/set/map/g :)
 #
 # LICENSE
 #
@@ -34,11 +34,11 @@
 #
 #   This program is distributed in the hope that it will be useful, but
 #   WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GPL
-#   for more details.
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+#   Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License along
-#   with this program. If not, see <http://www.gnu.org/licenses/>.
+#   with this program. If not, see <https://www.gnu.org/licenses/>.
 #
 #   As a special exception, the respective Autoconf Macro's copyright owner
 #   gives unlimited permission to copy, distribute and modify the configure
@@ -53,26 +53,22 @@
 #   modified version of the Autoconf Macro, you may extend this special
 #   exception to the GPL to apply to your modified version as well.
 
-#serial 5
+#serial 7
 
-AU_ALIAS([AC_CXX_HAVE_EXT_HASH_MAP],[AX_CXX_HAVE_EXT_HASH_MAP])
+AU_ALIAS([AC_CXX_HAVE_EXT_HASH_MAP], [AX_CXX_HAVE_EXT_HASH_MAP])
 AC_DEFUN([AX_CXX_HAVE_EXT_HASH_MAP],
-[AC_CACHE_CHECK([whether the compiler has ext/hash_map],
-[ax_cv_cxx_have_ext_hash_map],
+[AC_CACHE_CHECK(whether the compiler has ext/hash_map,
+ax_cv_cxx_have_ext_hash_map,
 [AC_REQUIRE([AX_CXX_NAMESPACES])
   AC_LANG_PUSH([C++])
-  AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
-#include <ext/hash_map>
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <ext/hash_map>
 #ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
-  ]],[[
-hash_map<int, int> t; return 0;
-  ]])],
-  [ax_cv_cxx_have_ext_hash_map=yes],[ax_cv_cxx_have_ext_hash_map=no])
-  AC_LANG_POP
+#endif]], [[hash_map<int, int> t; return 0;]])],
+  [ax_cv_cxx_have_ext_hash_map=yes], [ax_cv_cxx_have_ext_hash_map=no])
+  AC_LANG_POP([C++])
 ])
 if test "$ax_cv_cxx_have_ext_hash_map" = yes; then
-   AC_DEFINE([HAVE_EXT_HASH_MAP],[1],[Define to 1 if the compiler has ext/hash_map])
+   AC_DEFINE(HAVE_EXT_HASH_MAP,,[define if the compiler has ext/hash_map])
 fi
 ])

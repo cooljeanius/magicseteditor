@@ -1,6 +1,6 @@
-#==========================================================================
-# http://www.gnu.org/software/autoconf-archive/ax_cxx_header_stdcxx_0x.html
-#==========================================================================
+# ============================================================================
+#  https://www.gnu.org/software/autoconf-archive/ax_cxx_header_stdcxx_0x.html
+# ============================================================================
 #
 # SYNOPSIS
 #
@@ -14,25 +14,23 @@
 #
 #   Copyright (c) 2008 Benjamin Kosnik <bkoz@redhat.com>
 #
-#   Copying & distribution of this file, with or without modification, are
+#   Copying and distribution of this file, with or without modification, are
 #   permitted in any medium without royalty provided the copyright notice
 #   and this notice are preserved. This file is offered as-is, without any
 #   warranty.
 
-#serial 7
+#serial 9
 
-AU_ALIAS([AC_CXX_HEADER_STDCXX_0X],[AX_CXX_HEADER_STDCXX_0X])
-AU_ALIAS([AC_CXX_COMPILE_STDCXX_0X],[AX_CXX_COMPILE_STDCXX_0X])
-AU_ALIAS([AC_COMPILE_STDCXX_0X],[AX_CXX_COMPILE_STDCXX_0X])
-AC_DEFUN([AX_CXX_HEADER_STDCXX_0X],[
-  AC_CACHE_CHECK([for ISO C++ 0x include files],
-  [ax_cv_cxx_stdcxx_0x],
-  [AC_REQUIRE([AX_CXX_COMPILE_STDCXX_0X])
+AU_ALIAS([AC_CXX_HEADER_STDCXX_0X], [AX_CXX_HEADER_STDCXX_0X])
+AC_DEFUN([AX_CXX_HEADER_STDCXX_0X], [
+  AC_CACHE_CHECK(for ISO C++ 0x include files,
+  ax_cv_cxx_stdcxx_0x,
+  [AC_REQUIRE([AC_COMPILE_STDCXX_0X])
   AC_LANG_PUSH([C++])
   ac_save_CXXFLAGS="$CXXFLAGS"
   CXXFLAGS="$CXXFLAGS -std=gnu++0x"
 
-  AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
     #include <cassert>
     #include <ccomplex>
     #include <cctype>
@@ -110,12 +108,12 @@ AC_DEFUN([AX_CXX_HEADER_STDCXX_0X],[
     #include <utility>
     #include <valarray>
     #include <vector>
-  ]],[[]])],
-  [ax_cv_cxx_stdcxx_0x=yes],[ax_cv_cxx_stdcxx_0x=no])
-  AC_LANG_POP
+  ]], [])],
+  [ax_cv_cxx_stdcxx_0x=yes], [ax_cv_cxx_stdcxx_0x=no])
+  AC_LANG_POP([C++])
   CXXFLAGS="$ac_save_CXXFLAGS"
   ])
   if test "$ax_cv_cxx_stdcxx_0x" = yes; then
-    AC_DEFINE([STDCXX_0X_HEADERS],[1],[Define to 1 if ISO C++ 0x header files are present. ])
+    AC_DEFINE(STDCXX_0X_HEADERS,,[Define if ISO C++ 0x header files are present. ])
   fi
 ])

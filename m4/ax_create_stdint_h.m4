@@ -1,10 +1,10 @@
-#==========================================================================
-#    http://www.gnu.org/software/autoconf-archive/ax_create_stdint_h.html
-#==========================================================================
+# ===========================================================================
+#    https://www.gnu.org/software/autoconf-archive/ax_create_stdint_h.html
+# ===========================================================================
 #
 # SYNOPSIS
 #
-#   AX_CREATE_STDINT_H([HEADER-TO-GENERATE],[HEDERS-TO-CHECK])
+#   AX_CREATE_STDINT_H [( HEADER-TO-GENERATE [, HEDERS-TO-CHECK])]
 #
 # DESCRIPTION
 #
@@ -12,13 +12,13 @@
 #   existence of an include file <stdint.h> that defines a set of typedefs,
 #   especially uint8_t,int32_t,uintptr_t. Many older installations will not
 #   provide this file, but some will have the very same definitions in
-#   <inttypes.h>. In other enviroments we can use the inet-types in
+#   <inttypes.h>. In other environments we can use the inet-types in
 #   <sys/types.h> which would define the typedefs int8_t and u_int8_t
-#   respectivly.
+#   respectively.
 #
 #   This macros will create a local "_stdint.h" or the headerfile given as
 #   an argument. In many cases that file will just "#include <stdint.h>" or
-#   "#include <inttypes.h>", while in other environments it will provide a
+#   "#include <inttypes.h>", while in other environments it will provide the
 #   set of basic 'stdint's definitions/typedefs:
 #
 #     int8_t,uint8_t,int16_t,uint16_t,int32_t,uint32_t,intptr_t,uintptr_t
@@ -27,19 +27,19 @@
 #   which may or may not rely on the definitions of other files, or using
 #   the AC_CHECK_SIZEOF macro to determine the actual sizeof each type.
 #
-#   If your headers require the stdint-types you will want to create an
+#   if your header files require the stdint-types you will want to create an
 #   installable file mylib-int.h that all your other installable header may
 #   include. So if you have a library package named "mylib", just use
 #
-#     AX_CREATE_STDINT_H([mylib-int.h])
+#     AX_CREATE_STDINT_H(mylib-int.h)
 #
 #   in configure.ac and go to install that very header file in Makefile.am
 #   along with the other headers (mylib.h) - and the mylib-specific headers
 #   can simply use "#include <mylib-int.h>" to obtain the stdint-types.
 #
 #   Remember, if the system already had a valid <stdint.h>, the generated
-#   file will include it directly. No need for HAVE_STDINT_H things...
-#   (oops, GCC 4.2.x has deliberatly disabled its stdint.h for non-c99
+#   file will include it directly. No need for fuzzy HAVE_STDINT_H things...
+#   (oops, GCC 4.2.x has deliberately disabled its stdint.h for non-c99
 #   compilation and the c99-mode is not the default. Therefore this macro
 #   will not use the compiler's stdint.h - please complain to the GCC
 #   developers).
@@ -48,40 +48,19 @@
 #
 #   Copyright (c) 2008 Guido U. Draheim <guidod@gmx.de>
 #
-#   This program is free software; you can redistribute it and/or modify it
-#   under the terms of the GNU General Public License as published by the
-#   Free Software Foundation; either version 3 of the License, or (at your
-#   option) any later version.
-#
-#   This program is distributed in the hope that it will be useful, but
-#   WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GPL for
-#   more details.
-#
-#   You should have received a copy of the GNU General Public License along
-#   with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-#   As a special exception, the respective Autoconf Macro's copyright owner
-#   gives unlimited permission to copy, distribute and modify the configure
-#   scripts that are the output of Autoconf when processing the Macro. You
-#   need not follow the terms of the GNU General Public License when using
-#   or distributing such scripts, even though portions of the text of the
-#   Macro appear in them. The GNU General Public License (GPL) does govern
-#   all other use of the material that constitutes the Autoconf Macro.
-#
-#   This special exception to the GPL applies to versions of the Autoconf
-#   Macro released by the Autoconf Archive. When you make and distribute a
-#   modified version of the Autoconf Macro, you may extend this special
-#   exception to the GPL to apply to your modified version as well.
+#   Copying and distribution of this file, with or without modification, are
+#   permitted in any medium without royalty provided the copyright notice
+#   and this notice are preserved.  This file is offered as-is, without any
+#   warranty.
 
-#serial 10
+#serial 21
 
 AC_DEFUN([AX_CHECK_DATA_MODEL],[
-   AC_CHECK_SIZEOF([char])
-   AC_CHECK_SIZEOF([short])
-   AC_CHECK_SIZEOF([int])
-   AC_CHECK_SIZEOF([long])
-   AC_CHECK_SIZEOF([void*])
+   AC_CHECK_SIZEOF(char)
+   AC_CHECK_SIZEOF(short)
+   AC_CHECK_SIZEOF(int)
+   AC_CHECK_SIZEOF(long)
+   AC_CHECK_SIZEOF(void*)
    ac_cv_char_data_model=""
    ac_cv_char_data_model="$ac_cv_char_data_model$ac_cv_sizeof_char"
    ac_cv_char_data_model="$ac_cv_char_data_model$ac_cv_sizeof_short"
@@ -113,17 +92,17 @@ AC_DEFUN([AX_CHECK_DATA_MODEL],[
    AC_MSG_RESULT([$ac_cv_data_model ($ac_cv_long_data_model, $n)])
 ])
 
-dnl# AX_CHECK_HEADER_STDINT_X([HEADERLIST],[ACTION-IF])
+dnl AX_CHECK_HEADER_STDINT_X([HEADERLIST][,ACTION-IF])
 AC_DEFUN([AX_CHECK_HEADER_STDINT_X],[
-AC_CACHE_CHECK([for stdint uintptr_t],[ac_cv_header_stdint_x],[
+AC_CACHE_CHECK([for stdint uintptr_t], [ac_cv_header_stdint_x],[
  ac_cv_header_stdint_x="" # the 1997 typedefs (inttypes.h)
   AC_MSG_RESULT([(..)])
   for i in m4_ifval([$1],[$1],[stdint.h inttypes.h sys/inttypes.h sys/types.h])
   do
    unset ac_cv_type_uintptr_t
    unset ac_cv_type_uint64_t
-   AC_CHECK_TYPE([uintptr_t],[ac_cv_header_stdint_x=$i],[continue],[#include <$i>])
-   AC_CHECK_TYPE([uint64_t],[and64="/uint64_t"],[and64=""],[#include<$i>])
+   AC_CHECK_TYPE(uintptr_t,[ac_cv_header_stdint_x=$i],continue,[#include <$i>])
+   AC_CHECK_TYPE(uint64_t,[and64="/uint64_t"],[and64=""],[#include<$i>])
    m4_ifvaln([$2],[$2]) break
   done
   AC_MSG_CHECKING([for stdint uintptr_t])
@@ -131,15 +110,15 @@ AC_CACHE_CHECK([for stdint uintptr_t],[ac_cv_header_stdint_x],[
 ])
 
 AC_DEFUN([AX_CHECK_HEADER_STDINT_O],[
-AC_CACHE_CHECK([for stdint uint32_t],[ac_cv_header_stdint_o],[
+AC_CACHE_CHECK([for stdint uint32_t], [ac_cv_header_stdint_o],[
  ac_cv_header_stdint_o="" # the 1995 typedefs (sys/inttypes.h)
   AC_MSG_RESULT([(..)])
   for i in m4_ifval([$1],[$1],[inttypes.h sys/inttypes.h sys/types.h stdint.h])
   do
    unset ac_cv_type_uint32_t
    unset ac_cv_type_uint64_t
-   AC_CHECK_TYPE([uint32_t],[ac_cv_header_stdint_o=$i],[continue],[#include <$i>])
-   AC_CHECK_TYPE([uint64_t],[and64="/uint64_t"],[and64=""],[#include<$i>])
+   AC_CHECK_TYPE(uint32_t,[ac_cv_header_stdint_o=$i],continue,[#include <$i>])
+   AC_CHECK_TYPE(uint64_t,[and64="/uint64_t"],[and64=""],[#include<$i>])
    m4_ifvaln([$2],[$2]) break
    break;
   done
@@ -148,14 +127,14 @@ AC_CACHE_CHECK([for stdint uint32_t],[ac_cv_header_stdint_o],[
 ])
 
 AC_DEFUN([AX_CHECK_HEADER_STDINT_U],[
-AC_CACHE_CHECK([for stdint u_int32_t],[ac_cv_header_stdint_u],[
+AC_CACHE_CHECK([for stdint u_int32_t], [ac_cv_header_stdint_u],[
  ac_cv_header_stdint_u="" # the BSD typedefs (sys/types.h)
   AC_MSG_RESULT([(..)])
   for i in m4_ifval([$1],[$1],[sys/types.h inttypes.h sys/inttypes.h]) ; do
    unset ac_cv_type_u_int32_t
    unset ac_cv_type_u_int64_t
-   AC_CHECK_TYPE([u_int32_t],[ac_cv_header_stdint_u=$i],[continue],[#include <$i>])
-   AC_CHECK_TYPE([u_int64_t],[and64="/u_int64_t"],[and64=""],[#include<$i>])
+   AC_CHECK_TYPE(u_int32_t,[ac_cv_header_stdint_u=$i],continue,[#include <$i>])
+   AC_CHECK_TYPE(u_int64_t,[and64="/u_int64_t"],[and64=""],[#include<$i>])
    m4_ifvaln([$2],[$2]) break
    break;
   done
@@ -166,21 +145,21 @@ AC_CACHE_CHECK([for stdint u_int32_t],[ac_cv_header_stdint_u],[
 AC_DEFUN([AX_CREATE_STDINT_H],
 [# ------ AX CREATE STDINT H -------------------------------------
 AC_MSG_CHECKING([for stdint types])
-ac_stdint_h=`echo ifelse([$1],[],[_stdint.h],[$1])`
+ac_stdint_h=`echo ifelse($1, , _stdint.h, $1)`
 # try to shortcircuit - if the default include path of the compiler
 # can find a "stdint.h" header then we assume that all compilers can.
 AC_CACHE_VAL([ac_cv_header_stdint_t],[
 old_CXXFLAGS="$CXXFLAGS" ; CXXFLAGS=""
 old_CPPFLAGS="$CPPFLAGS" ; CPPFLAGS=""
 old_CFLAGS="$CFLAGS"     ; CFLAGS=""
-AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <stdint.h>]],[[int_least32_t v = 0;]])],
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <stdint.h>]], [[int_least32_t v = 0;]])],
 [ac_cv_stdint_result="(assuming C99 compatible system)"
- ac_cv_header_stdint_t="stdint.h"; ],
-[ac_cv_header_stdint_t=""])
+ ac_cv_header_stdint_t="stdint.h";],
+ [ac_cv_header_stdint_t=""])
 if test "$GCC" = "yes" && test ".$ac_cv_header_stdint_t" = "."; then
 CFLAGS="-std=c99"
-AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <stdint.h>]],[[int_least32_t v = 0;]])],
-[AC_MSG_WARN([your GCC compiler has a defunct stdint.h for its default-mode])])
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <stdint.h>]], [[int_least32_t v = 0;]])],
+[AC_MSG_WARN(your GCC compiler has a defunct stdint.h for its default-mode)], [])
 fi
 CXXFLAGS="$old_CXXFLAGS"
 CPPFLAGS="$old_CPPFLAGS"
@@ -200,10 +179,10 @@ fi
 
 if test "_$ac_cv_header_stdint_t" = "_" ; then # cannot shortcircuit..
 
-dnl# .....intro message done, now do a few system checks.....
-dnl# btw, all old CHECK_TYPE macros do automatically "DEFINE" a type,
-dnl# therefore we use the autoconf implementation detail CHECK_TYPE_NEW
-dnl# instead that is triggered with 3 or more arguments (see types.m4)
+dnl .....intro message done, now do a few system checks.....
+dnl btw, all old CHECK_TYPE macros do automatically "DEFINE" a type,
+dnl therefore we use the autoconf implementation detail CHECK_TYPE_NEW
+dnl instead that is triggered with 3 or more arguments (see types.m4)
 
 inttype_headers=`echo $2 | sed -e 's/,/ /g'`
 
@@ -251,7 +230,7 @@ AC_CHECK_TYPE(int_least32_t,,,[#include <$ac_cv_header_stdint>])
 AC_CHECK_TYPE(int_fast32_t,,,[#include<$ac_cv_header_stdint>])
 AC_CHECK_TYPE(intmax_t,,,[#include <$ac_cv_header_stdint>])
 
-fi # shortcircut to system "stdint.h"
+fi # shortcircuit to system "stdint.h"
 # ------------------ PREPARE VARIABLES ------------------------------
 if test "$GCC" = "yes" ; then
 ac_cv_stdint_message="using gnu compiler "`$CC --version | head -1`
@@ -370,7 +349,7 @@ echo "" >>$ac_stdint
   cat >>$ac_stdint <<STDINT_EOF
 /* .................... detections part ............................ */
 
-/* whether we need to define bitspecific types from compiler base types */
+/* whether we need to define bit specific types from compiler base types */
 #ifndef _STDINT_HEADER_INTPTR
 #ifndef _STDINT_HEADER_UINT32
 #ifndef _STDINT_HEADER_U_INT32
@@ -467,7 +446,7 @@ typedef u_int32_t uint32_t;
 #endif
 
 #ifdef _STDINT_NEED_INT_MODEL_T
-/* we must guess all the basic types. Apart from byte-adressable system, */
+/* we must guess all the basic types. Apart from byte-addressable system, */
 /* there a few 32-bit-only dsp-systems that we guard with BYTE_MODEL 8-} */
 /* (btw, those nibble-addressable systems are way off, or so we assume) */
 
@@ -655,7 +634,7 @@ typedef           long   intptr_t;
 #endif
 #endif
 
-/* These limits are merily those of a two complement byte-oriented system */
+/* These limits are merrily those of a two complement byte-oriented system */
 
 /* Minimum of signed integral types.  */
 # define INT8_MIN               (-128)

@@ -4,8 +4,8 @@
 #| License:      GNU General Public License 2 or later (see file COPYING) |
 #+------------------------------------------------------------------------+
 
-# -*- Autoconf -*-
-# Process this file with autoconf to produce a configure script.
+dnl# -*- Autoconf -*-
+dnl# Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
 AC_INIT([magicseteditor],[0.3.9],[twanvl@users.sourceforge.net])
@@ -35,24 +35,24 @@ if test -n "${CXXFLAGS}"; then
 fi
 AC_PROG_CXX
 AC_LANG([C++])
-if test "x$AWK" = "x"; then
-  test -z "$AWK"
+if test "x${AWK}" = "x"; then
+  test -z "${AWK}"
   AC_PROG_AWK
 else
-  test ! -z "$AWK" && export AWK
+  test ! -z "${AWK}" && export AWK
   AC_SUBST([AWK])
 fi
-if test "x$CC" = "x"; then
-  test -z "$CC"
+if test "x${CC}" = "x"; then
+  test -z "${CC}"
   AC_PROG_CC
-  if test "x$CC_C_O" = "x"; then
-    test -z "$CC_C_O"
+  if test "x${CC_C_O}" = "x"; then
+    test -z "${CC_C_O}"
     AM_PROG_CC_C_O
   else
-    test ! -z "$CC_C_O" && export CC_C_O
+    test ! -z "${CC_C_O}" && export CC_C_O
   fi
 else
-  test ! -z "$CC" && export CC
+  test ! -z "${CC}" && export CC
   AC_SUBST([CC])
   AC_PROG_GCC_TRADITIONAL
 fi
@@ -64,15 +64,16 @@ AC_PROG_OBJCXXCPP
 LT_INIT([win32-dll])
 LT_LANG([C++])
 LT_LANG([Windows Resource])
-if test "x$RANLIB" = "x"; then
-  test -z "$RANLIB"
+if test "x${RANLIB}" = "x"; then
+  test -z "${RANLIB}"
   AC_PROG_RANLIB
 else
-  test ! -z "$RANLIB" && export RANLIB
+  test ! -z "${RANLIB}" && export RANLIB
   AC_SUBST([RANLIB])
 fi
 AC_ARG_ENABLE([debug],[
-  AS_HELP_STRING([--enable-debug],[Enable debug build (requires debug versions of wxWidgets and libstdc++.)])
+  AS_HELP_STRING([--enable-debug],
+             [Enable debug build (requires debug versions of wxWidgets/libstdc++)])
 ])
 if test "x${enable_debug}" = "xyes"; then
   DEFAULT_CXXFLAGS="-ggdb -O0"
@@ -82,7 +83,7 @@ else
   WXCONFIG_FLAGS=""
 fi
 
-if test X$user_set_cxxflags != Xyes; then
+if test "X${user_set_cxxflags}" != "Xyes"; then
   CXXFLAGS=${DEFAULT_CXXFLAGS}
 fi
 
@@ -100,11 +101,11 @@ AX_BOOST_THREAD
 AX_CC_MAXOPT
 AX_CREATE_STDINT_H
 AC_DEFUN([AX_REQUIRE_CXX_0X],[
-  AC_REQUIRE([AC_PROG_CXXCPP])
-  AC_REQUIRE([AC_PROG_CXX_C_O])
-  AC_REQUIRE([AX_CXX_COMPILE_STDCXX_0X])
-  AC_REQUIRE([AX_CXX_HEADER_STDCXX_0X])
-])
+  AC_REQUIRE([AC_PROG_CXXCPP])dnl
+  AC_REQUIRE([AC_PROG_CXX_C_O])dnl
+  AC_REQUIRE([AX_CXX_COMPILE_STDCXX_11])dnl
+  AC_REQUIRE([AX_CXX_HEADER_STDCXX_11])dnl
+])dnl
 AX_REQUIRE_CXX_0X
 AX_DLL_STRING
 AX_CXX_GCC_ABI_DEMANGLE
@@ -116,31 +117,31 @@ AX_CXX_RTTI
 AX_CXX_STLPORT_HASHMAP
 AX_PTHREAD
 AC_LANG_PUSH([C++])
-AX_CHECK_COMPILE_FLAG([-frtti],[export CXXFLAGS="$CXXFLAGS -frtti"])
+AX_CHECK_COMPILE_FLAG([-frtti],[export CXXFLAGS="${CXXFLAGS} -frtti"])
 AC_LANG_POP
 
 # gt_* macros are from gettext
 # gl_* macros are from gnulib
 AC_DEFUN([AC_POSSIBLE_DUPLICATE_GETTEXT_CHECKS],[
-  AC_REQUIRE([gt_TYPE_WCHAR_T])
-  AC_REQUIRE([gt_TYPE_WINT_T])
-  AC_REQUIRE([gl_THREADLIB])
-  AC_REQUIRE([AC_PROG_YACC])
+  AC_REQUIRE([gt_TYPE_WCHAR_T])dnl
+  AC_REQUIRE([gt_TYPE_WINT_T])dnl
+  AC_REQUIRE([gl_THREADLIB])dnl
+  AC_REQUIRE([AC_PROG_YACC])dnl
   AC_CHECK_HEADERS([argz.h fcntl.h float.h langinfo.h libintl.h limits.h \
                     locale.h malloc.h malloc/malloc.h stddef.h \
-                    stdio_ext.h wchar.h])
-  AC_REQUIRE([AC_FUNC_ALLOCA])
-  AC_REQUIRE([AC_FUNC_MBRTOWC])
-  AC_REQUIRE([AC_FUNC_MMAP])
-  AC_REQUIRE([AC_TYPE_UINT8_T])
-  AC_REQUIRE([AC_TYPE_UINT16_T])
-  AC_REQUIRE([AC_TYPE_UINT32_T])
-  AC_CHECK_TYPES([ptrdiff_t])
+                    stdio_ext.h wchar.h])dnl
+  AC_REQUIRE([AC_FUNC_ALLOCA])dnl
+  AC_REQUIRE([AC_FUNC_MBRTOWC])dnl
+  AC_REQUIRE([AC_FUNC_MMAP])dnl
+  AC_REQUIRE([AC_TYPE_UINT8_T])dnl
+  AC_REQUIRE([AC_TYPE_UINT16_T])dnl
+  AC_REQUIRE([AC_TYPE_UINT32_T])dnl
+  AC_CHECK_TYPES([ptrdiff_t])dnl
   AC_CHECK_FUNCS([__argz_count __argz_next __argz_stringify getcwd getwd \
                   localeconv mblen mbrlen memchr mempcpy munmap \
                   nl_langinfo setlocale stpcpy strcasecmp strchr strcspn \
-                  strdup strstr strtoul])
-])
+                  strdup strstr strtoul])dnl
+])dnl
 AC_POSSIBLE_DUPLICATE_GETTEXT_CHECKS
 
 # Bakefile checks
@@ -173,7 +174,7 @@ fi
 WX_CONFIG_OPTIONS
 
 WXRC_CHECK([HAVE_WXRC=1],[HAVE_WXRC=0])
-if test "x$HAVE_WXRC" != x1; then
+if test "x${HAVE_WXRC}" != "x1"; then
     AC_MSG_ERROR([
            The wxrc program was not installed or not found.
 
@@ -181,11 +182,11 @@ if test "x$HAVE_WXRC" != x1; then
     ])
 fi
 
-CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
-CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
-CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
+CPPFLAGS="${CPPFLAGS} ${WX_CPPFLAGS}"
+CXXFLAGS="${CXXFLAGS} ${WX_CXXFLAGS_ONLY}"
+CFLAGS="${CFLAGS} ${WX_CFLAGS_ONLY}"
 
-LDFLAGS="$LDFLAGS $WX_LIBS"
+LDFLAGS="${LDFLAGS} ${WX_LIBS}"
 
 WX_STANDARD_OPTIONS([--enable-[debug|unicode|shared|wxshared|wxdebug]])
 WX_STANDARD_OPTIONS([--with-[gtk|msw|motif|x11|mac|dfb]])
@@ -199,17 +200,18 @@ AC_ARG_ENABLE([pch],[AS_HELP_STRING([--enable-pch],[
 
 # Check for precompiled headers
 # TODO: Deal with braindead GCC and actually check
-AM_CONDITIONAL([GLIBCPP_BUILD_PCH],[test "x$enable_pch" = "xyes" -a "x$CXX" = "xg++"])
+AM_CONDITIONAL([GLIBCPP_BUILD_PCH],
+               [test "x${enable_pch}" = "xyes" -a "x${CXX}" = "xg++"])
 
 # Checks for header files.
 AC_HEADER_STDBOOL dnl# calls AC_CHECK_HEADER_STDBOOL
 AC_DEFUN([AC_REQUIRE_HEADER_STDC],[
-  AC_REQUIRE([AC_PROG_MAKE_SET])
-  AC_REQUIRE([AC_HEADER_STDC])
-])
+  AC_REQUIRE([AC_PROG_MAKE_SET])dnl
+  AC_REQUIRE([AC_HEADER_STDC])dnl
+])dnl
 AC_REQUIRE_HEADER_STDC
 AC_CHECK_HEADERS([errno.h error.h stdio.h tchar.h windows.h \
-                  wx/generic/imaglist.h wx/image.h wx/imaglist.h])
+                  wx/generic/imaglist.h wx/image.h wx/imaglist.h])dnl
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_BIGENDIAN
@@ -224,11 +226,11 @@ AC_FUNC_ERROR_AT_LINE
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_SELECT_ARGTYPES
-AC_CHECK_FUNCS([floor memset pow select sqrt strcmp])
+AC_CHECK_FUNCS([floor memset pow select sqrt strcmp])dnl
 
 AC_CACHE_CHECK([whether the compiler provides atomic builtins],[ap_cv_atomic_builtins],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
-int main()
+int main(void)
 {
     unsigned long val = 1010, tmp, *mem = &val;
 
@@ -262,23 +264,27 @@ int main()
         return 1;
 
     return 0;
-}]])],[ap_cv_atomic_builtins=yes],[ap_cv_atomic_builtins=no],[ap_cv_atomic_builtins=cross])])
+}]])],[ap_cv_atomic_builtins=yes],[ap_cv_atomic_builtins=no],[ap_cv_atomic_builtins=cross])])dnl
 
-if test "x$ap_cv_atomic_builtins" = "xyes"; then
-    AC_DEFINE([HAVE_GCC_ATOMIC_BUILTINS],[1],[Define if compiler provides atomic builtins])
+if test "x${ap_cv_atomic_builtins}" = "xyes"; then
+    AC_DEFINE([HAVE_GCC_ATOMIC_BUILTINS],[1],
+              [Define if compiler provides atomic builtins])
 fi
 
 # we want to always have DEBUG==WX_DEBUG and UNICODE==WX_UNICODE
-WX_DEBUG=$DEBUG
-WX_UNICODE=$UNICODE
+WX_DEBUG=${DEBUG}
+WX_UNICODE=${UNICODE}
 
 WX_CONVERT_STANDARD_OPTIONS_TO_WXCONFIG_FLAGS
-WX_CONFIG_CHECK([2.8.0],[wxWin=1],[],[html,core,net,base],[$WXCONFIG_FLAGS])
+WX_CONFIG_CHECK([2.8.0],[wxWin=1],[],[html,core,net,base],[${WXCONFIG_FLAGS}])
 WX_DETECT_STANDARD_OPTION_VALUES
 
+# Output.
 AC_CONFIG_FILES([Makefile po/Makefile.in po/Makevars])
 AC_OUTPUT
 
 WX_STANDARD_OPTIONS_SUMMARY_MSG
 WX_STANDARD_OPTIONS_SUMMARY_MSG_BEGIN
 WX_STANDARD_OPTIONS_SUMMARY_MSG_END
+
+# EOF
