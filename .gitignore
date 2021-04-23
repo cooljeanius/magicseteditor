@@ -25,6 +25,7 @@ po/Makefile
 po/Makefile.in
 po/Makevars
 po/POTFILES
+po/remove-potcdate.sed
 _stdint.h
 *.dirstamp
 tmpwrk*/*
