@@ -15,6 +15,7 @@ src/config.h
 config.h
 stamp-h*
 src/stamp-h*
+src/.vs/*
 *deps/*.*o
 */*deps/*.*o
 */*/*deps/*.*o
