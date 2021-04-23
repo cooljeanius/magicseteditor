@@ -1,11 +1,15 @@
+build-aux/compile linguist-vendored
 build-aux/config.guess linguist-vendored
 build-aux/config.rpath linguist-vendored
 build-aux/config.sub linguist-vendored
+build-aux/depcomp linguist-vendored
 build-aux/install-sh linguist-vendored
 build-aux/ltmain.sh linguist-vendored
+build-aux/missing linguist-vendored
 m4/g*.m4 linguist-vendored
 m4/i*.m4 linguist-vendored
 m4/l*.m4 linguist-vendored
 m4/nls.m4 linguist-vendored
 m4/p*.m4 linguist-vendored
 po/Makefile.in.in linguist-vendored
+ChangeLog    merge=cl-merge

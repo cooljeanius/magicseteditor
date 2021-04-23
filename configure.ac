@@ -104,7 +104,16 @@ AC_DEFUN([AX_REQUIRE_CXX_0X],[
   AC_REQUIRE([AC_PROG_CXXCPP])dnl
   AC_REQUIRE([AC_PROG_CXX_C_O])dnl
   AC_REQUIRE([AX_CXX_COMPILE_STDCXX_11])dnl
-  AC_REQUIRE([AX_CXX_HEADER_STDCXX_11])dnl
+  m4_ifdef([AX_CXX_HEADER_STDCXX_11],[
+    AC_REQUIRE([AX_CXX_HEADER_STDCXX_11])dnl
+  ],[
+    m4_ifdef([AX_CXX_HEADER_STDCXX_0X],[
+      dnl# it needs this one, too:
+      m4_ifdef([AX_CXX_COMPILE_STDCXX_0X],[
+        AC_REQUIRE([AX_CXX_HEADER_STDCXX_0X])dnl
+      ])dnl
+    ])dnl
+  ])dnl
 ])dnl
 AX_REQUIRE_CXX_0X
 AX_DLL_STRING
@@ -210,8 +219,8 @@ AC_DEFUN([AC_REQUIRE_HEADER_STDC],[
   AC_REQUIRE([AC_HEADER_STDC])dnl
 ])dnl
 AC_REQUIRE_HEADER_STDC
-AC_CHECK_HEADERS([errno.h error.h stdio.h tchar.h windows.h \
-                  wx/generic/imaglist.h wx/image.h wx/imaglist.h])dnl
+AC_CHECK_HEADERS([boost/preprocessor/cat.hpp errno.h error.h stdio.h tchar.h \
+                  windows.h wx/generic/imaglist.h wx/image.h wx/imaglist.h])dnl
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_BIGENDIAN
