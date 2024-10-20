@@ -36,25 +36,24 @@ fi
 AC_PROG_CXX
 AC_LANG([C++])
 if test "x${AWK}" = "x"; then
-  test -z "${AWK}"
+  test -z "${AWK}" || unset AWK
   AC_PROG_AWK
 else
-  test ! -z "${AWK}" && export AWK
+  test -n "${AWK}" && export AWK
   AC_SUBST([AWK])
 fi
 if test "x${CC}" = "x"; then
-  test -z "${CC}"
+  test -z "${CC}" || unset CC
   AC_PROG_CC
   if test "x${CC_C_O}" = "x"; then
-    test -z "${CC_C_O}"
+    test -z "${CC_C_O}" || unset CC_C_O
     AM_PROG_CC_C_O
   else
-    test ! -z "${CC_C_O}" && export CC_C_O
+    test -n "${CC_C_O}" && export CC_C_O
   fi
 else
-  test ! -z "${CC}" && export CC
+  test -n "${CC}" && export CC
   AC_SUBST([CC])
-  AC_PROG_GCC_TRADITIONAL
 fi
 AC_PROG_CPP
 AC_PROG_INSTALL
@@ -65,10 +64,10 @@ LT_INIT([win32-dll])
 LT_LANG([C++])
 LT_LANG([Windows Resource])
 if test "x${RANLIB}" = "x"; then
-  test -z "${RANLIB}"
+  test -z "${RANLIB}" || unset RANLIB
   AC_PROG_RANLIB
 else
-  test ! -z "${RANLIB}" && export RANLIB
+  test -n "${RANLIB}" && export RANLIB
   AC_SUBST([RANLIB])
 fi
 AC_ARG_ENABLE([debug],[
@@ -199,21 +198,21 @@ LDFLAGS="${LDFLAGS} ${WX_LIBS}"
 
 WX_STANDARD_OPTIONS([--enable-[debug|unicode|shared|wxshared|wxdebug]])
 WX_STANDARD_OPTIONS([--with-[gtk|msw|motif|x11|mac|dfb]])
-WX_STANDARD_OPTIONS([--with-wxversion])
+WX_STANDARD_OPTIONS([--with-wxversion])dnl
 
 AC_ARG_ENABLE([pch],[AS_HELP_STRING([--enable-pch],[
  Enable precompiled headers (Requires GCC of sufficiently
  high version). Speeds up compile times significantly...
  if it works.])
-])
+])dnl
 
 # Check for precompiled headers
 # TODO: Deal with braindead GCC and actually check
 AM_CONDITIONAL([GLIBCPP_BUILD_PCH],
-               [test "x${enable_pch}" = "xyes" -a "x${CXX}" = "xg++"])
+               [test "x${enable_pch}" = "xyes" -a "x${CXX}" = "xg++"])dnl
 
 # Checks for header files.
-AC_HEADER_STDBOOL dnl# calls AC_CHECK_HEADER_STDBOOL
+AC_HEADER_STDBOOL dnl# also "_CHECK"s it
 AC_DEFUN([AC_REQUIRE_HEADER_STDC],[
   AC_REQUIRE([AC_PROG_MAKE_SET])dnl
   AC_REQUIRE([AC_HEADER_STDC])dnl
@@ -243,20 +242,20 @@ int main(void)
 {
     unsigned long val = 1010, tmp, *mem = &val;
 
-    if (__sync_fetch_and_add(&val, 1010) != 1010 || val != 2020)
+    if ((__sync_fetch_and_add(&val, 1010) != 1010) || (val != 2020))
         return 1;
 
     tmp = val;
 
-    if (__sync_fetch_and_sub(mem, 1010) != tmp || val != 1010)
+    if ((__sync_fetch_and_sub(mem, 1010) != tmp) || (val != 1010))
         return 1;
 
-    if (__sync_sub_and_fetch(&val, 1010) != 0 || val != 0)
+    if ((__sync_sub_and_fetch(&val, 1010) != 0) || (val != 0))
         return 1;
 
     tmp = 3030;
 
-    if (__sync_val_compare_and_swap(mem, 0, tmp) != 0 || val != tmp)
+    if ((__sync_val_compare_and_swap(mem, 0, tmp) != 0) || (val != tmp))
         return 1;
 
     if (__sync_lock_test_and_set(&val, 4040) != 3030)

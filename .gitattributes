@@ -1,3 +1,5 @@
+_stdint.h linguist-generated
+aclocal.m4 linguist-generated
 build-aux/compile linguist-vendored
 build-aux/config.guess linguist-vendored
 build-aux/config.rpath linguist-vendored
@@ -6,10 +8,16 @@ build-aux/depcomp linguist-vendored
 build-aux/install-sh linguist-vendored
 build-aux/ltmain.sh linguist-vendored
 build-aux/missing linguist-vendored
+config.h.in linguist-generated
+configure linguist-generated
+configure.scan linguist-generated
+m4/ax_*.m4 linguist-vendored
 m4/g*.m4 linguist-vendored
 m4/i*.m4 linguist-vendored
 m4/l*.m4 linguist-vendored
 m4/nls.m4 linguist-vendored
 m4/p*.m4 linguist-vendored
+m4/w*.m4 linguist-vendored
+Makefile.in linguist-generated
 po/Makefile.in.in linguist-vendored
 ChangeLog    merge=cl-merge
