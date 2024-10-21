@@ -26,7 +26,7 @@ option field:
 	type: boolean
 	name: text costs
 	initial: yes
-	description: Should mana costs be plain text? Symbols usually can't be copied and pasted.
+	description: Should mana costs be plain text? Symbols usually cannot be copied and pasted.
 option field:
 	type: text
 	name: creator
